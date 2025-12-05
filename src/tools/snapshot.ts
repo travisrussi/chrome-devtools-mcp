@@ -114,7 +114,7 @@ export const getVisibleHtml = defineTool({
       .number()
       .optional()
       .describe(
-        'Maximum number of characters to return (default: 20000)',
+        'Maximum number of characters to return (default: 999999)',
       ),
   },
   handler: async (request, response, context) => {
@@ -140,7 +140,8 @@ export const getVisibleHtml = defineTool({
     const removeMeta = request.params.removeMeta === true; // default: false
     const cleanHtml = request.params.cleanHtml === true; // default: false
     const minify = request.params.minify === true; // default: false
-    const maxLength = request.params.maxLength || 20000; // default: 20000
+    const maxLength =
+      request.params.maxLength === undefined ? 999_999 : request.params.maxLength; // default: 999999
 
     if (removeScripts) {
       html = html.replace(
