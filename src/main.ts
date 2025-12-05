@@ -10,6 +10,7 @@ import type {Channel} from './browser.js';
 import {ensureBrowserConnected, ensureBrowserLaunched} from './browser.js';
 import {parseArguments} from './cli.js';
 import {loadIssueDescriptions} from './issue-descriptions.js';
+import {startStaticHttpServer} from './httpStaticServer.js';
 import {logger, saveLogsToFile} from './logger.js';
 import {McpContext} from './McpContext.js';
 import {McpResponse} from './McpResponse.js';
@@ -32,6 +33,9 @@ const VERSION = '0.11.0';
 export const args = parseArguments(VERSION);
 
 const logFile = args.logFile ? saveLogsToFile(args.logFile) : undefined;
+
+// Start the static HTTP server for serving HTML files
+export const httpServer = startStaticHttpServer();
 
 logger(`Starting Chrome DevTools MCP Server v${VERSION}`);
 const server = new McpServer(
